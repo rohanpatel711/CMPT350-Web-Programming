@@ -1,0 +1,304 @@
+Rohan Patel
+11247205
+rsp502
+
+SQL Log File
+
+mysql: [Warning] C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe: ignoring option '--no-beep' due to invalid value ''.
+Enter password: **************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.19 MySQL Community Server - GPL
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE IF NOT EXISTS rsp502a2;
+Query OK, 1 row affected (0.01 sec)
+mysql> USE rsp502a2;
+Database changed
+mysql>
+mysql> CREATE TABLE IF NOT EXISTS users_info(
+    ->   username VARCHAR(25) UNIQUE NOT NULL,
+    ->   firstName VARCHAR(25) NOT NULL,
+    ->   lastName VARCHAR(25) NOT NULL,
+    ->   email VARCHAR(40) UNIQUE NOT NULL,
+    ->   password VARCHAR(25) NOT NULL,
+    ->   phone VARCHAR(40),
+    ->   gender VARCHAR(25),
+    ->   age INT NOT NULL,
+    ->   PRIMARY KEY (username)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+mysql> CREATE TABLE IF NOT EXISTS contacts(
+    ->   contact1 VARCHAR(25) NOT NULL,
+    ->   contact2 VARCHAR(25) NOT NULL,
+    ->   displayName1 VARCHAR(50),
+    ->   displayName2 VARCHAR(50),
+    ->   PRIMARY KEY (contact1, contact2),
+    ->   FOREIGN KEY (contact1) REFERENCES users_info(username),
+    ->   FOREIGN KEY (contact2) REFERENCES users_info(username)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+mysql> CREATE TABLE IF NOT EXISTS messages(
+    ->   id INT UNIQUE NOT NULL,
+    ->   sender VARCHAR(25) NOT NULL,
+    ->   receiver VARCHAR(25) NOT NULL,
+    ->   message VARCHAR(1024) NOT NULL,
+    ->   moment TIMESTAMP,
+    ->   seenMoment TIMESTAMP,
+    ->   PRIMARY KEY (id),
+    ->   FOREIGN KEY (sender) REFERENCES users_info(username),
+    ->   FOREIGN KEY (receiver) REFERENCES users_info(username)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+mysql> CREATE TABLE IF NOT EXISTS posts (
+    ->   id INT UNIQUE NOT NULL,
+    ->   username VARCHAR(25) NOT NULL,
+    ->   post VARCHAR(2500) NOT NULL,
+    ->   moment TIMESTAMP,
+    ->   PRIMARY KEY (id),
+    ->   FOREIGN KEY (username) REFERENCES users_info(username)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+mysql> CREATE TABLE IF NOT EXISTS likes(
+    ->   postid INT UNIQUE NOT NULL,
+    ->   username VARCHAR(25) NOT NULL,
+    ->   post INT NOT NULL,
+    ->   moment TIMESTAMP,
+    ->   PRIMARY KEY (postid),
+    ->   FOREIGN KEY (username) REFERENCES users_info(username),
+    ->   FOREIGN KEY (post) REFERENCES posts(id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+mysql> show tables;
++--------------------+
+| Tables_in_rsp502a2 |
++--------------------+
+| contacts           |
+| likes              |
+| messages           |
+| posts              |
+| users_info         |
++--------------------+
+5 rows in set (0.00 sec)
+mysql> INSERT INTO users_info (username,firstName,lastName,email,password,phone,gender,age)
+    -> VALUES  ('nathawhite296','Nathan','Whitehead','nathawhite296@cmpt.usask.ca','BM!I@fH2+5','(889)005-4866x0241','Male',65),
+    ->  ('joshuortiz297','Joshua','Ortiz','joshuortiz297@cmpt.usask.ca','jKh47wAdW+',NULL,'Male',56),
+    -> ('melanrusse298','Melanie','Russell','melanrusse298@cmpt.usask.ca','%MHSLLLb60','435.049.3328','Female',56),
+    -> ('michapeter299','Michael','Peterson','michapeter299@cmpt.usask.ca','F@9OXNo(ml',NULL,'Male',26),
+    -> ('theodfry300','Theodore','Fry','theodfry300@cmpt.usask.ca','3r%9#At%UW','974-674-6284x560','unspecified',60),
+    -> ('angelhuber301','Angela','Huber','angelhuber301@cmpt.usask.ca','owxx0PvZq(',NULL,'Female',50),
+    -> ('brianjones302','Brianna','Jones','brianjones302@cmpt.usask.ca','7FQVfuqk%%',NULL,'Female',93),
+    -> ('andrerojas303','Andrew','Rojas','andrerojas303@cmpt.usask.ca','!V6WznfPdk','875.876.1460x073','unspecified',80),
+    -> ('jameshowar304','James','Howard','jameshowar304@cmpt.usask.ca','6VW%Myuf*m',NULL,'unspecified',43),
+    -> ('richasmith305','Richard','Smith','richasmith305@cmpt.usask.ca','Pf5mNqUl_U','(218)336-8631','unspecified',71),
+    -> ('laurerodri306','Lauren','Rodriguez','laurerodri306@cmpt.usask.ca','1iGgGPJo$7',NULL,'Female',34),
+    -> ('julierusso307','Julie','Russo','julierusso307@cmpt.usask.ca','5XA7khnx&3',NULL,'Female',24),
+    -> ('sherrwood308','Sherry','Wood','sherrwood308@cmpt.usask.ca','jMK6Cq3R*R','092.064.4270','Female',20),
+    -> ('robernguye320','Robert','Nguyen','robernguye320@cmpt.usask.ca','1l^H1O^lCX','(293)634-3860x37364','Male',82),
+    -> ('jeffrmitch735','Jeffrey','Mitchell','jeffrmitch735@cmpt.usask.ca','#HGa*psqf0','(274)850-8450','Male',29),
+    -> ('natalponce736','Natalie','Ponce','natalponce736@cmpt.usask.ca','6Byq6&7i^c','(412)362-1674x1911','unspecified',67),
+    -> ('jeffrwalto737','Jeffrey','Walton','jeffrwalto737@cmpt.usask.ca','(#D97PrHaV',NULL,'Male',67),
+    -> ('sarahbryan738','Sarah','Bryan','sarahbryan738@cmpt.usask.ca','%lmHT8HpMf','4408271944','Female',67),
+    -> ('scottmoren739','Scott','Moreno','scottmoren739@cmpt.usask.ca','y8&Z#2Yl+0','640.039.0389','Male',44),
+    -> ('jennigibso743','Jennifer','Gibson','jennigibso743@cmpt.usask.ca','yL2Dmy0te!',NULL,'unspecified',29),
+    -> ('melandomin744','Melanie','Dominguez','melandomin744@cmpt.usask.ca','WQ@6Ittrla',NULL,'Female',20),
+    -> ('tylerlong745','Tyler','Long','tylerlong745@cmpt.usask.ca','b&M6uPdD_)','961-716-5109x6243','Male',85),
+    -> ('amycohen746','Amy','Cohen','amycohen746@cmpt.usask.ca','(MrrSai&2s','907.782.7012','Female',51),
+    -> ('michaander747','Michael','Anderson','michaander747@cmpt.usask.ca',')4NV61MwY$',NULL,'unspecified',76),
+    -> ('johnjones748','John','Jones','johnjones748@cmpt.usask.ca','6z+4Uufj)e','+1-008-689-0019x6639','Male',71),
+    -> ('crystgriff1','Crystal','Griffin','crystgriff1@cmpt.usask.ca','^9KbSIq((k',NULL,'Female',75),
+    -> ('steveromer749','Steven','Romero','steveromer749@cmpt.usask.ca','pnT5EbaU$6',NULL,'Male',35),
+    -> ('whitnpark750','Whitney','Park','whitnpark750@cmpt.usask.ca','BDPlI0db@8',NULL,'Female',46),
+    -> ('heathlewis751','Heather','Lewis','heathlewis751@cmpt.usask.ca','f#5eHGxf9t','+1-851-261-2350x857','Female',93),
+    -> ('angeldavis752','Angel','Davis','angeldavis752@cmpt.usask.ca','LzP0K*Iz+O',NULL,'Male',93),
+    -> ('chrislopez753','Christopher','Lopez','chrislopez753@cmpt.usask.ca',')if8$RAh)*',NULL,'Male',61),
+    -> ('garygardn754','Gary','Gardner','garygardn754@cmpt.usask.ca','!w)J$+yv1a',NULL,'Male',24),
+    -> ('travimorto755','Travis','Morton','travimorto755@cmpt.usask.ca','%9Iiz_ai_#','+1-622-876-6313x0743','unspecified',47),
+    -> ('michawebst756','Michael','Webster','michawebst756@cmpt.usask.ca','1!R_RiOc*2','001-533-225-7798x5585','Male',38),
+    -> ('debortucke757','Deborah','Tucker','debortucke757@cmpt.usask.ca','$5KMTrcmqV','+1-379-506-0059','Female',36),
+    -> ('ryanbarry758','Ryan','Barry','ryanbarry758@cmpt.usask.ca','!Y)8QId37f','(631)511-6530x4385','unspecified',35),
+    -> ('calebosbor759','Caleb','Osborne','calebosbor759@cmpt.usask.ca','(dFCjWh7^0',NULL,'unspecified',17),
+    -> ('kevingarri760','Kevin','Garrison','kevingarri760@cmpt.usask.ca','@V4mX3nw*@','751-697-0117x03202','Male',87),
+    -> ('michaherre761','Michael','Herrera','michaherre761@cmpt.usask.ca','Ud0kvRDg*R','001-639-812-6513','unspecified',45),
+    -> ('mitchbaker762','Mitchell','Baker','mitchbaker762@cmpt.usask.ca','^Chy)NaN9j',NULL,'Male',30),
+    -> ('connogreen763','Connor','Green','connogreen763@cmpt.usask.ca','Z31z_bGl*&','+1-855-915-2914x269','unspecified',39),
+    -> ('lisaherre998','Lisa','Herrera','lisaherre998@cmpt.usask.ca','&15N#$kaS#','001-914-474-3248x5816','Female',56),
+    -> ('julialucas999','Julia','Lucas','julialucas999@cmpt.usask.ca','zfWYQHjp*8',NULL,'Female',87),
+    -> ('isaacmoran1000','Isaac','Moran','isaacmoran1000@cmpt.usask.ca','lgd&wGK@!9','639-166-1965x3965','Male',93),
+    -> ('georgsilva2','George','Silva','georgsilva2@cmpt.usask.ca','3JlD_Qq@q',NULL,'Male',37),
+    -> ('adamscott3','Adam','Scott','adamscott3@cmpt.usask.ca','MmN%HTBc_9',NULL,'Male',74),
+    -> ('lauribaker4','Laurie','Baker','lauribaker4@cmpt.usask.ca','wsO)bFJK%0','054.986.2476x0475','Female',64),
+    -> ('kellimendo5','Kelli','Mendoza','kellimendo5@cmpt.usask.ca','7j5CU&z^*#',NULL,'Female',83),
+    -> ('lindsford6','Lindsey','Ford','lindsford6@cmpt.usask.ca','g)!t60Rv8k',NULL,'Female',43),
+    -> ('markbowma7','Mark','Bowman','markbowma7@cmpt.usask.ca','X^&8aAOe_r',NULL,'unspecified',77),
+    -> ('danienolan8','Danielle','Nolan','danienolan8@cmpt.usask.ca','G&N933Bi+H',NULL,'Female',81),
+    -> ('alejaadams9','Alejandra','Adams','alejaadams9@cmpt.usask.ca','j(6$YP8gvo','+1-522-675-9417x09872','Female',98),
+    -> ('erikamccar10','Erika','Mccarthy','erikamccar10@cmpt.usask.ca','YFPMZ_hp_7',NULL,'Female',54),
+    -> ('ebonyingra11','Ebony','Ingram','ebonyingra11@cmpt.usask.ca',')u8ACGUiLJ',NULL,'unspecified',96),
+    -> ('darrechen12','Darrell','Chen','darrechen12@cmpt.usask.ca','#b#rb_Pm_4',NULL,'unspecified',47),
+    -> ('shannhanco13','Shannon','Hancock','shannhanco13@cmpt.usask.ca','09F*nctp@v','001-516-212-3543x881','Female',38),
+    -> ('bryanosbor14','Bryan','Osborne','bryanosbor14@cmpt.usask.ca','VHQNx%f2(0',NULL,'Male',61),
+    -> ('ambertran15','Amber','Tran','ambertran15@cmpt.usask.ca','cVGDZWuj+3','022.036.5710x5035','Female',98),
+    -> ('elizapatte16','Elizabeth','Patterson','elizapatte16@cmpt.usask.ca','we2XZdc4C$','(115)949-3232x2694','unspecified',30),
+    -> ('alisocook17','Alison','Cook','alisocook17@cmpt.usask.ca','dR2t!#Zy#%','9946705611','Female',38),
+    -> ('joannmyers18','Joanna','Myers','joannmyers18@cmpt.usask.ca','yOELvK^i(3','528-193-6911x3776','unspecified',20),
+    -> ('dalebryan19','Dale','Bryant','dalebryan19@cmpt.usask.ca','e3m3SC&z*E',NULL,'Male',30),
+    -> ('timotnewto20','Timothy','Newton','timotnewto20@cmpt.usask.ca','r)!t6nIy_f','+1-092-713-6126x54614','Male',66),
+    -> ('jodyolson21','Jody','Olson','jodyolson21@cmpt.usask.ca','1edHbU3B+x','(826)577-5410x819','unspecified',35),
+    -> ('jennilucas22','Jennifer','Lucas','jennilucas22@cmpt.usask.ca','Xq8_Dy_i)3',NULL,'Female',68),
+    -> ('gabriterre293','Gabriela','Terrell','gabriterre293@cmpt.usask.ca','UOQbb4zN+6',NULL,'unspecified',97),
+    -> ('juliefletc294','Julie','Fletcher','juliefletc294@cmpt.usask.ca','+aQ6EUz_0y','961-599-3299','Female',30),
+    -> ('lindsowen295','Lindsey','Owen','lindsowen295@cmpt.usask.ca','$9Xm63Qj(#',NULL,'Female',53)
+    -> ;
+Query OK, 68 rows affected (0.01 sec)
+Records: 68  Duplicates: 0  Warnings: 0
+mysql>  INSERT INTO messages (id,sender,receiver,message,moment,seenMoment)
+    ->   VALUES (292,'chrislopez753','amycohen746','Writer quality law understand since attack story.','2020-01-25 10:00:48', NULL),
+    ->  (293,'chrislopez753','dalebryan19','Certain Mr every win adult score generation.','2020-02-01 04:40:13', NULL),
+    ->  (294,'chrislopez753','dalebryan19','Own light her modern series within though.','2020-02-02 21:24:39', NULL),
+    ->  (295,'chrislopez753','heathlewis751','Yourself issue lawyer face quite.','2020-02-06 09:38:08',NULL),
+    ->  (296,'chrislopez753','heathlewis751','Nice collection table.','2020-02-03 11:47:13',NULL),
+    ->  (297,'chrislopez753','jodyolson21','Goal newspaper however region try.','2020-01-13 17:01:18',NULL),
+    ->  (298,'chrislopez753','jodyolson21','True pass about author serve.','2020-01-04 16:01:01',NULL),
+    ->  (299,'chrislopez753','lindsford6','View hot husband capital push seven.','2020-01-30 06:32:56',NULL),
+    ->  (300,'chrislopez753','lindsford6','Mean message home growth worker amount.','2020-01-08 01:45:58',NULL),
+    ->  (301,'adamscott3','kevingarri760','Impact truth defense.','2020-01-10 04:30:07',NULL),
+    ->  (302,'adamscott3','kevingarri760','Back include firm friend carry.','2020-02-06 19:16:24',NULL),
+    ->  (303,'adamscott3','georgsilva2','Buy our create research.','2020-02-01 14:55:43',NULL),
+    ->  (304,'adamscott3','georgsilva2','Most couple whether leader.','2020-01-20 07:01:07',NULL),
+    ->  (305,'adamscott3','jameshowar304','Ground win of green short college evening.','2020-02-01 01:43:10',NULL),
+    ->  (306,'adamscott3','jameshowar304','Job begin base material author scientist.','2020-01-16 00:13:28',NULL),
+    ->  (307,'adamscott3','markbowma7','Participant specific Republican dark hundred forget.','2020-01-16 18:46:43',NULL),
+    ->  (308,'adamscott3','markbowma7','Strategy water difference brother want.','2020-01-22 09:58:46',NULL),
+    ->  (309,'adamscott3','ambertran15','Walk response rest bring describe.','2020-01-02 23:08:22',NULL),
+    ->  (310,'adamscott3','ambertran15','Effort town buy president crime.','2020-01-05 04:55:47',NULL),
+    ->  (393,'sherrwood308','travimorto755','Economy financial return also fill.','2020-01-15 15:49:22',NULL),
+    ->  (394,'sherrwood308','travimorto755','Learn among be general guess top product station.','2020-02-03 10:09:18',NULL),
+    ->  (395,'sherrwood308','laurerodri306','Color serious everybody doctor such military affect professor.','2020-01-16 08:48:36',NULL),
+    ->  (396,'sherrwood308','laurerodri306','Pull shake candidate coach.','2020-01-24 07:52:59',NULL),
+    ->  (397,'sherrwood308','ebonyingra11','Happen forward forward.','2020-02-02 20:09:58',NULL),
+    ->  (398,'sherrwood308','ebonyingra11','Knowledge serious see throughout stage.','2020-01-23 03:28:13',NULL),
+    ->  (399,'sherrwood308','joshuortiz297','Stock piece rock young near stage various.','2020-02-01 07:11:36',NULL),
+    ->  (400,'sherrwood308','joshuortiz297','Require large single traditional decide fact president.','2020-01-01 13:08:05',NULL),
+    ->  (311,'bryanosbor14','scottmoren739','Standard them language high call also wind live.','2020-01-03 13:19:48',NULL),
+    ->  (312,'bryanosbor14','scottmoren739','Simply television institution.','2020-01-18 13:38:28',NULL),
+    ->  (313,'bryanosbor14','isaacmoran1000','Reflect food find song plant cost.','2020-01-16 02:24:15',NULL),
+    ->  (314,'bryanosbor14','isaacmoran1000','What natural movement likely up together cultural.','2020-01-04 06:32:14',NULL),
+    ->  (315,'bryanosbor14','ambertran15','Should professional authority.','2020-01-06 08:05:10',NULL),
+    ->  (316,'bryanosbor14','ambertran15','Become simple including present hope system Democrat.','2020-01-08 03:36:02', NULL),
+    ->  (317,'bryanosbor14','jodyolson21','Bed year over bank her situation spring.','2020-01-12 04:33:03',NULL),
+    ->  (318,'bryanosbor14','jodyolson21','Score fact open public.','2020-02-05 22:45:41',NULL),
+    ->  (319,'bryanosbor14','markbowma7','Coach president but fear.','2020-01-17 13:43:09',NULL),
+    ->  (382,'scottmoren739','ryanbarry758','Here free son guess several.','2020-01-13 07:45:03',NULL),
+    ->  (383,'scottmoren739','tylerlong745','Animal one nation evidence thus project agent.','2020-01-02 14:32:43',NULL),
+    ->  (384,'scottmoren739','tylerlong745','Mean rock everything sign.','2020-01-20 18:48:03',NULL),
+    ->  (391,'sherrwood308','danienolan8','Can fine check alone produce never quickly candidate.','2020-01-09 21:15:19',NULL),
+    ->  (392,'sherrwood308','danienolan8','Sign hand seven state bad.','2020-01-22 18:24:51',NULL);
+Query OK, 41 rows affected (0.00 sec)
+Records: 41  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO contacts (contact1, contact2)
+    -> VALUES ('alejaadams9','bryanosbor14'),
+    ->        ('erikamccar10','crystgriff1'),
+    ->        ('erikamccar10','danienolan8');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO contacts (contact1, contact2)
+    -> VALUES ('darrechen12','mitchbaker762'),
+    ->        ('darrechen12','markbowma7'),
+    ->        ('darrechen12','rebecpoole645'),
+    ->        ('darrechen12','douglbarre394'),
+    ->        ('darrechen12','georgsilva2'),
+    ->        ('shannhanco13','timotnewto20'),
+    ->        ('shannhanco13','richasmith305'),
+    ->        ('shannhanco13','lindsford6'),
+    ->        ('shannhanco13','markbowma7'),
+    ->        ('shannhanco13','julierusso307'),
+    ->        ('bryanosbor14','mitchbaker762'),
+    ->        ('bryanosbor14','scottmoren739'),
+    ->        ('bryanosbor14','theodfry300'),
+    ->        ('bryanosbor14','joannmyers18'),
+    ->        ('bryanosbor14','danienolan8');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`rsp502a2`.`contacts`, CONSTRAINT `contacts_ibfk_2` FOREIGN KEY (`contact2`) REFERENCES `users_info` (`username`))
+mysql> INSERT INTO contacts (contact1, contact2)
+    -> VALUES ('darrechen12','mitchbaker762'),
+    ->        ('darrechen12','markbowma7'),
+    ->        ('darrechen12','robernguye320'),
+    ->        ('darrechen12','debortucke757'),
+    ->        ('darrechen12','georgsilva2'),
+    ->        ('shannhanco13','timotnewto20'),
+    ->        ('shannhanco13','richasmith305'),
+    ->        ('shannhanco13','lindsford6'),
+    ->        ('shannhanco13','markbowma7'),
+    ->        ('shannhanco13','julierusso307'),
+    ->        ('bryanosbor14','mitchbaker762'),
+    ->        ('bryanosbor14','scottmoren739'),
+    ->        ('bryanosbor14','theodfry300'),
+    ->        ('bryanosbor14','joannmyers18'),
+    ->        ('bryanosbor14','danienolan8');
+Query OK, 15 rows affected (0.00 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO contacts (contact1, contact2)
+    -> VALUES ('garygardn754','sherrwood308'),
+    ->        ('garygardn754','isaacmoran1000'),
+    ->        ('bryanosbor14','lauribaker4'),
+    ->        ('bryanosbor14','michawebst756'),
+    ->        ('bryanosbor14','dalebryan19'),
+    ->        ('bryanosbor14','ambertran15'),
+    ->        ('bryanosbor14','markbowma7'),
+    ->        ('garygardn754','laurerodri306'),
+    ->        ('garygardn754','kellimendo5'),
+    ->        ('garygardn754','whitnpark750'),
+    ->        ('garygardn754','scottmoren739'),
+    ->        ('garygardn754','danienolan8'),
+    ->        ('erikamccar10','kellimendo5'),
+    ->        ('erikamccar10','robernguye320');
+Query OK, 14 rows affected (0.01 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO posts(id,username,post,moment)
+    -> VALUES  (1,'calebosbor759','Career coach no say new.','2020-01-28 11:23:33'),
+    ->         (2,'darrechen12','Reality a ball century we speech why we.','2020-01-10 09:15:24'),
+    ->         (3,'lindsford6','Pm training management town machine unit.','2020-01-13 21:35:58'),
+    ->         (4,'jodyolson21','Walk true outside open.','2020-01-22 18:33:12'),
+    ->         (5,'ebonyingra11','Knowledge season ground discover its else prevent line.','2020-01-09 18:52:21'),
+    ->         (6,'robernguye320','Leg medical song southern door picture.','2020-01-21 19:37:32'),
+    ->         (7,'theodfry300','Action wrong east keep campaign daughter.','2020-01-19 20:58:14'),
+    ->         (8,'tylerlong745','Author unit else lead commercial case girl.','2020-01-27 21:28:54'),
+    ->         (9,'michapeter299','Office key free you lay.','2020-01-11 15:55:02'),
+    ->         (10,'isaacmoran1000','One as difficult study professional company listen.','2020-02-03 22:01:43'),
+    ->         (11,'amycohen746','Good allow debate material.','2020-01-18 05:20:23'),
+    ->         (12,'jodyolson21','Main recently themselves able guy against look.','2020-01-15 05:11:21'),
+    ->         (13,'travimorto755','Improve travel arrive.','2020-02-04 14:06:13'),
+    ->         (14,'julierusso307','As appear simply party game fine there.','2020-01-10 22:38:56'),
+    ->         (15,'julierusso307','Base increase leader new medical future grow.','2020-01-20 21:46:07'),
+    ->         (16,'julierusso307','Maintain simply bit seek control loss worker factor.','2020-01-13 19:04:41'),
+    ->         (17,'connogreen763','Chair whom early son well four pay.','2020-02-07 07:12:04'),
+    ->         (18,'connogreen763','Foot consumer design happen.','2020-01-05 12:17:07');
+Query OK, 18 rows affected (0.02 sec)
+Records: 18  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO likes (postid,username,post,moment)
+    -> VALUES (11,'adamscott3',1,'2020-01-28 22:26:07'),
+    ->        (12,'danienolan8',2,'2020-01-08 01:30:04'),
+    ->        (13,'danienolan8',3,'2020-01-29 21:40:42'),
+    ->        (14,'ebonyingra11',4,'2020-01-24 18:42:15'),
+    ->        (15,'ebonyingra11',5,'2020-01-17 20:43:59'),
+    ->        (16,'erikamccar10',6,'2020-01-15 01:59:57'),
+    ->        (17,'georgsilva2',7,'2020-01-23 12:33:48'),
+    ->        (18,'kellimendo5',9,'2020-01-24 06:43:23'),
+    ->        (19,'isaacmoran1000',10,'2020-01-16 14:51:49'),
+    ->        (1,'jennigibso743',11,'2020-01-31 01:17:09'),
+    ->        (2,'kevingarri760',12,'2020-01-21 22:43:12'),
+    ->        (3,'lindsford6',13,'2020-01-24 18:48:50'),
+    ->        (4,'markbowma7',14,'2020-01-20 07:17:21'),
+    ->        (5,'melanrusse298',15,'2020-02-05 04:08:37'),
+    ->        (6,'michapeter299',16,'2020-02-06 19:49:19'),
+    ->        (7,'richasmith305',17,'2020-01-31 07:57:24'),
+    ->        (8,'travimorto755',18,'2020-02-05 02:23:52'),
+    ->        (9,'shannhanco13',18,'2020-01-18 09:11:17'),
+    ->        (10,'travimorto755',18,'2020-01-01 05:12:13'),
+    ->        (20,'whitnpark750',18,'2020-01-12 03:10:17');
+Query OK, 20 rows affected (0.00 sec)
+Records: 20  Duplicates: 0  Warnings: 0
