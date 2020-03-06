@@ -1,0 +1,46 @@
+<!-- Name - Rohan Patel-->
+<!-- Number - 11247205 -->
+<!-- NSID - rsp502 -->
+<!-- CMPT 350 Assignment 3 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CMPT350A3 - rsp502</title>
+   </head>
+    <style>
+        body{
+            margin-left : 5em;
+            font-family: "Courier New", Courier, monospace;
+        }
+        p{
+            font-size: 20px;
+        }
+        h1{
+            font-size: 30px;
+        }
+        a{
+            font-size: 20px;
+        }
+    </style>
+    <body> 
+        <div>
+            <div>
+                <h1>
+                    <%=name%>
+                </h1>
+            </div>
+            <% result.forEach(function(r){ %>
+                    <p> <%= r.Post%> </p>
+            <% }) %>
+            <a href="/post/<%=name%>">
+                Make A Post
+            </a>
+            <form action="/post/delete/<%=name%>" method="POST">
+                <input type="submit" name="delete" value="DELETE"/>
+            </form>
+        </div>
+    </body>
+</html>
+
+

@@ -1,0 +1,38 @@
+<!-- Name - Rohan Patel-->
+<!-- Name - 11247205 -->
+<!-- NSID - rsp502 -->
+<!-- CMPT 350 Assignment 3 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CMPT350A3 - rsp502</title>
+     </head>
+    <style type="text/css">
+        body{
+            margin-left : 5em;
+            font-family: "Courier New", Courier, monospace;
+        }
+        a{
+            font-size: 20px;
+        }
+        h1{
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        </script>
+    <body>
+    <div>
+        <div>
+            <h1>
+                Homepage for Assignment 3
+            </h1>
+        </div>
+        <a href="/create">Create a Chat Room</a>
+        <% result.forEach(function(r){ %>
+            <a style="text-decoration: none;" href="/home/chatroom/<%= r.Name%>"> <span> &nbsp;&nbsp;&nbsp;</span><%= r.Name%></a>
+        <% }) %>
+    </div>
+    </body>
+</html>
