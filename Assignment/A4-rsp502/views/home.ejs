@@ -1,0 +1,35 @@
+<!--Name - Rohan Patel-->
+<!--NSID - rsp502-->
+<!--Student number - 11247205 -->
+<!--CMPT 350 Assignment 4-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Assignment 4</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    </head>
+    <style type="text/css">
+        body{
+            margin-left : 3em;
+        }
+    </style>
+    <script>
+        </script>
+    <body>
+    <div id="main-page" data-role="page">
+        <div data-role="header"> <h1>Assignment 4 </h1> </div>
+        <a href="/create" data-transition="slide"> Create A Board </a>
+        <br>
+        <br>
+        <p>Existing Boards:</p>
+        <% result.forEach(function(r){ %>
+        <a href="/home/board/<%= r.Name%>" > <%= r.Name%></a><br>
+
+    <% }) %> 
+    </div>
+    </body>
+</html>
